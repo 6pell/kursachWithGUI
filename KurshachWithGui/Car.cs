@@ -1,6 +1,6 @@
 ﻿using System;
 
-class Automobile
+class Car
 {
 	public static int count = 0;
 	public int id { get; set; }
@@ -9,7 +9,7 @@ class Automobile
 	public double engineVolume { get; set; }
 	public string fuel { get; set; }
 	public string type { get; set; }
-	public Automobile()
+	public Car()
 	{
 		id = count;
 		mark = "undefinded";
@@ -19,7 +19,7 @@ class Automobile
 		type = "undefinded";
 		count++;
 	}
-	public Automobile(int id, string mark, string releaseYear, double engineVolume, string fuel, string type)
+	public Car(int id, string mark, string releaseYear, double engineVolume, string fuel, string type)
 	{
 		this.id = id;
 		this.mark = mark;
@@ -30,7 +30,7 @@ class Automobile
 		count++;
 	}
 	
-	~Automobile()
+	~Car()
 	{
 		Console.WriteLine("Out..");
 	}

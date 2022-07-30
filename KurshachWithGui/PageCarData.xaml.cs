@@ -20,37 +20,30 @@ namespace KurshachWithGui
         public PageCarData()
         {
             InitializeComponent();
-            Machina objs = new Machina();
-            objs.ReadDataFromFile();
-            List<Automobile>cars = objs.GetData();
-            CarDataGrid.ItemsSource = cars;
+            CarsService carsService = new CarsService();
+            carsService.ReadDataFromFile();
+            CarDataGrid.ItemsSource = carsService.GetData();
         }
 
         private void SaveCarData(object sender, RoutedEventArgs e)
         {
-            List<Automobile> DataOnForm = (List<Automobile>)CarDataGrid.ItemsSource;
-            Machina objs = new Machina();
-            objs.SetData(DataOnForm);
-            objs.RewriteDataFile();
+            CarsService carsService = new CarsService();
+            List<Car> DataOnForm = (List<Car>)CarDataGrid.ItemsSource;
+            carsService.SetData(DataOnForm);
+            carsService.RewriteDataFile();
         }
 
         private void InputSearch_PreviewKeyUp(object sender, KeyEventArgs e)
         {
-            
+            CarsService carsService = new CarsService();
+            carsService.ReadDataFromFile();
             if (InputSearch.Text == "")
             {
-                Machina objs = new Machina();
-                objs.ReadDataFromFile();
-                List<Automobile> cars = objs.GetData();
-                CarDataGrid.ItemsSource = cars;
+                CarDataGrid.ItemsSource = carsService.GetData();
             }
             else if (InputSearch.Text != "")
             {
-                List<Automobile> DataOnForm = (List<Automobile>)CarDataGrid.ItemsSource;
-                Machina objs = new Machina();
-                objs.ReadDataFromFile();
-                DataOnForm = objs.SearchByKey(InputSearch.Text.ToString());
-                CarDataGrid.ItemsSource = DataOnForm;
+                CarDataGrid.ItemsSource = carsService.SearchByKey(InputSearch.Text.ToString());
             }
         }
     }

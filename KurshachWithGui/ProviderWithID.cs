@@ -1,21 +1,21 @@
 ﻿using System;
 
-public class MarkWithID
+public class ProviderWithID
 {
 	public int id { get; set; }
 	public string name { get; set; }
-	public MarkWithID()
+	public ProviderWithID()
 	{
 		id = 0;
 		name = "undefinded";
 	}
-	public MarkWithID(int id, string name)
+	public ProviderWithID(int id, string name)
 	{
 		this.id = id;
 		this.name = name;
 	}
-	~MarkWithID() 
-	{
+	~ProviderWithID()
+		{
 		Console.WriteLine("Out..");
 	}
 }

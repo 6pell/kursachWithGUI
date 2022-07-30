@@ -21,44 +21,44 @@ namespace KurshachWithGui
     /// </summary>
     public partial class PageDetailData : Page
     {
-        public ObservableCollection<MarkWithID> marks { get; set; }
+        public ObservableCollection<MarkWithID> markWithIDs { get; set; }
+        public ObservableCollection<ProviderWithID> providerWithIDs { get; set; }
         public PageDetailData()
         {
             InitializeComponent();
-            Detail objsDetail = new Detail();
-            Machina objsCars = new Machina();
-            objsDetail.ReadDataFromFile();
-            objsCars.ReadDataFromFile();
 
-            List<DetailFields> list = objsDetail.GetData();
-            DetailDataGrid.ItemsSource = list;
+            DetailsService detailsService = new DetailsService();
+            CarsService carsService = new CarsService();
+            ProvidersService providerService = new ProvidersService();
+            
+            detailsService.ReadDataFromFile();
+            carsService.ReadDataFromFile();
+            providerService.ReadDataFromFile();
 
-            marks = objsCars.GetDataMark();
+            DetailDataGrid.ItemsSource = detailsService.GetData();
+            markWithIDs = carsService.GetDataMark();
+            providerWithIDs = providerService.GetDataProvider();
         }
 
         private void SaveDetailData(object sender, RoutedEventArgs e)
         {
-            List<DetailFields> DataOnForm = (List<DetailFields>)DetailDataGrid.ItemsSource;
-            Detail objs = new Detail();
-            objs.SetData(DataOnForm);
-            objs.RewriteDataFile();
+            List<Detail> dataOnForm = (List<Detail>)DetailDataGrid.ItemsSource;
+            DetailsService detailsService = new DetailsService();
+            detailsService.SetData(dataOnForm);
+            detailsService.RewriteDataFile();
         }
 
         private void InputSearch_PreviewKeyUp(object sender, KeyEventArgs e)
         {
+            DetailsService detailsService = new DetailsService();
+            detailsService.ReadDataFromFile();
             if (InputSearch.Text == "")
             {
-                Detail objs = new Detail();
-                objs.ReadDataFromFile();
-                DetailDataGrid.ItemsSource = objs.GetData();
+                DetailDataGrid.ItemsSource = detailsService.GetData();
             }
             else if (InputSearch.Text != "")
             {
-                List<DetailFields> DataOnForm = (List<DetailFields>)DetailDataGrid.ItemsSource;
-                Detail objs = new Detail();
-                objs.ReadDataFromFile();
-                DataOnForm = objs.SearchByKey(InputSearch.Text.ToString());
-                DetailDataGrid.ItemsSource = DataOnForm;
+                DetailDataGrid.ItemsSource = detailsService.SearchByKey(InputSearch.Text.ToString());
             }
         }
     }

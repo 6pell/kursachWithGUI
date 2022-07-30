@@ -23,44 +23,30 @@ namespace KurshachWithGui
         public PageProviderData()
         {
             InitializeComponent();
-            Provider obj = new Provider();
-            obj.ReadDataFromFile();
-            ProviderDataGrid.ItemsSource = obj.GetData();
+            ProvidersService providersService = new ProvidersService();
+            providersService.ReadDataFromFile();
+            ProviderDataGrid.ItemsSource = providersService.GetData();
         }
 
         private void SaveProviderData(object sender, RoutedEventArgs e)
         {
-            List<ProviderFields> DataOnForm = (List<ProviderFields>)ProviderDataGrid.ItemsSource;
-            Provider obj = new Provider();
-            obj.SetData(DataOnForm);
-            obj.RewriteDataFile();
-        }
-
-        private void SearchProviderData(object sender, RoutedEventArgs e)
-        {
-            List<ProviderFields> DataOnForm = (List<ProviderFields>)ProviderDataGrid.ItemsSource;
-            Provider obj = new Provider();
-            obj.SetData(DataOnForm);
-            DataOnForm = obj.SearchByKey(InputSearch.Text);
-            ProviderDataGrid.ItemsSource = DataOnForm;
+            List<Provider> DataOnForm = (List<Provider>)ProviderDataGrid.ItemsSource;
+            ProvidersService providersService = new ProvidersService();
+            providersService.SetData(DataOnForm);
+            providersService.RewriteDataFile();
         }
 
         private void InputSearch_PreviewKeyUp(object sender, KeyEventArgs e)
         {
+            ProvidersService providersService = new ProvidersService();
+            providersService.ReadDataFromFile();
             if (InputSearch.Text == "")
             {
-                Provider obj = new Provider();
-                obj.ReadDataFromFile();
-                ProviderDataGrid.ItemsSource = obj.GetData();
+                ProviderDataGrid.ItemsSource = providersService.GetData();
             }
             else if (InputSearch.Text != "") 
             {
-                List<ProviderFields> DataOnForm = (List<ProviderFields>)ProviderDataGrid.ItemsSource;
-                Provider objs = new Provider();
-
-                objs.ReadDataFromFile();
-                DataOnForm = objs.SearchByKey(InputSearch.Text.ToString());
-                ProviderDataGrid.ItemsSource = DataOnForm;
+                ProviderDataGrid.ItemsSource = providersService.SearchByKey(InputSearch.Text.ToString());
             }
         }
 

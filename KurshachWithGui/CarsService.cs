@@ -5,21 +5,21 @@ using System.Linq;
 using System.IO;
 using System.Collections.ObjectModel;
 
-class Machina
+class CarsService
 {
-    private List<Automobile> cars = new List<Automobile>();
+    private List<Car> cars = new List<Car>();
 	private const string path = "..\\..\\BaseCar.txt";
-	~Machina()
+	~CarsService()
 	{
 		Console.WriteLine("Out..");
 	}
 
-	public List<Automobile> GetData() 
+	public List<Car> GetData() 
 	{
 		return cars;
 	}
 
-	public void SetData(List<Automobile>data) 
+	public void SetData(List<Car>data) 
 	{
 		cars = data;
 	}
@@ -39,8 +39,7 @@ class Machina
 	public string objInString(int id) 
 	{
 		string slesh = "/";
-		string myData = cars[id].ToString() + slesh + 
-						cars[id].mark + slesh + 
+		string myData = cars[id].mark + slesh + 
 						cars[id].releaseYear + slesh + 
 						cars[id].engineVolume.ToString() + slesh +
 						cars[id].fuel + slesh +
@@ -60,7 +59,7 @@ class Machina
                 string NewFuel = reader.ReadLine();
                 string NewType = reader.ReadLine();
                 string Trash = reader.ReadLine();
-                cars.Add(new Automobile(NewId, NewMark, NewReleaseYear, NewEngineVolume, NewFuel, NewType));
+                cars.Add(new Car(NewId, NewMark, NewReleaseYear, NewEngineVolume, NewFuel, NewType));
 			} while (!reader.EndOfStream);
 		}
 	}
@@ -94,9 +93,9 @@ class Machina
 		}
 	}
 
-	public List<Automobile> SearchByKey(string keyWord) 
+	public List<Car> SearchByKey(string keyWord) 
 	{
-		List<Automobile> obj = new List<Automobile>();
+		List<Car> obj = new List<Car>();
 		if (int.TryParse(keyWord, out var number1) == true)
 		{
 			obj = SearchByInt(number1);
@@ -112,9 +111,9 @@ class Machina
 		return obj;
 	}
 
-	public List<Automobile> SearchByDouble(double keyWord)
+	public List<Car> SearchByDouble(double keyWord)
 	{
-		List<Automobile> searchCars = new List<Automobile>();
+		List<Car> searchCars = new List<Car>();
 		bool found = false;
 
 		for (int i = 0; i < cars.Count(); i++)
@@ -122,20 +121,20 @@ class Machina
 			if (cars[i].engineVolume == keyWord)
 			{
 				found = true;
-				searchCars.Add(new Automobile(cars[i].id, cars[i].mark, cars[i].releaseYear, cars[i].engineVolume, cars[i].fuel, cars[i].type));
+				searchCars.Add(new Car(cars[i].id, cars[i].mark, cars[i].releaseYear, cars[i].engineVolume, cars[i].fuel, cars[i].type));
 			}
 
 		}
 		if (found == false)
 		{
-			searchCars.Add(new Automobile(0, "NotFound", "NotFound", 0, "NotFound", "NotFound"));
+			searchCars.Add(new Car(0, "NotFound", "NotFound", 0, "NotFound", "NotFound"));
 		}
 		return searchCars;
 	}
 
-	public List<Automobile> SearchByInt(int keyWord) 
+	public List<Car> SearchByInt(int keyWord) 
 	{
-		List<Automobile> searchCars = new List<Automobile>();
+		List<Car> searchCars = new List<Car>();
 		bool found = false;
 
 		for (int i = 0; i < cars.Count(); i++) 
@@ -143,20 +142,20 @@ class Machina
 			if (cars[i].id == keyWord || Convert.ToInt32(cars[i].releaseYear) == keyWord)
 			{
 				found = true;
-				searchCars.Add(new Automobile(cars[i].id, cars[i].mark, cars[i].releaseYear, cars[i].engineVolume, cars[i].fuel, cars[i].type));
+				searchCars.Add(new Car(cars[i].id, cars[i].mark, cars[i].releaseYear, cars[i].engineVolume, cars[i].fuel, cars[i].type));
 			}
 			
 		}
 		if (found == false)
 		{
-			searchCars.Add(new Automobile(0, "NotFound", "NotFound", 0, "NotFound", "NotFound"));
+			searchCars.Add(new Car(0, "NotFound", "NotFound", 0, "NotFound", "NotFound"));
 		}
 		return searchCars;
 	}
 
-	public List<Automobile> SearchByString(string keyWord) 
+	public List<Car> SearchByString(string keyWord) 
 	{
-		List<Automobile> searchCars = new List<Automobile>();
+		List<Car> searchCars = new List<Car>();
 		bool found = false;
 		for(int i = 0;i < cars.Count(); i++)
 		{
@@ -168,12 +167,12 @@ class Machina
 			)
 			{
 				found = true;
-				searchCars.Add(new Automobile(cars[i].id, cars[i].mark, cars[i].releaseYear, cars[i].engineVolume, cars[i].fuel, cars[i].type));
+				searchCars.Add(new Car(cars[i].id, cars[i].mark, cars[i].releaseYear, cars[i].engineVolume, cars[i].fuel, cars[i].type));
 			}
 		}
 		if (found == false)
 		{
-			searchCars.Add(new Automobile(0,"NotFound", "NotFound", 0, "NotFound", "NotFound"));
+			searchCars.Add(new Car(0,"NotFound", "NotFound", 0, "NotFound", "NotFound"));
 		}
 		return searchCars;
 	}
